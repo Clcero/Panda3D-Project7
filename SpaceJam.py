@@ -88,7 +88,7 @@ class MyApp(ShowBase):
                 return new_position
 
     def _generate_drones(self):
-        '''Spawn Drones on planets 1, 2, and 3.'''
+        '''Spawn Drone patterns around random planets. '''
         solar_system = [self.Planet1, self.Planet2, self.Planet3, self.Planet4, self.Planet5, self.Planet6]
         self._randomize_planets(solar_system)
 
@@ -105,6 +105,7 @@ class MyApp(ShowBase):
             self.DrawCircleZ(self.XYZPlanet, nickName + '-Z', j)
     
     def _generate_orbiters(self):
+        '''Spawns all orbiter drones.'''
         self.rootAssetFolder = "Assets"
         self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone-MLBOrb1", 
                                                  6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(800, 900), "MLB", self.Hero)
@@ -116,6 +117,7 @@ class MyApp(ShowBase):
                                                  6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(500, 600), "Cloud", self.Hero)
     
     def _randomize_planets(self, planets):
+        '''Planet RNG helper function.'''
         self.CloudPlanet = planets.pop(random.randrange(len(planets)))
         self.MLBPlanet = planets.pop(random.randrange(len(planets)))
         self.XYZPlanet = planets.pop(random.randrange(len(planets)))
