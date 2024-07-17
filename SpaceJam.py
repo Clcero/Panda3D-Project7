@@ -33,10 +33,14 @@ class MyApp(ShowBase):
         '''Spawns planets, the universe, space station, the player, and drones.'''
         self._generate_planets()
         self._generate_drones()
+        
 
         self.Universe = spaceJamClasses.Universe(self.loader, "./Assets/Universe/Universe.x", self.render, 'Universe', "Assets/Universe/Universe.jpg", (0, 0, 0), 13500)
         self.SpaceStation1 = spaceJamClasses.SpaceStation(self.loader, "./Assets/Space Station/spacestation.obj", self.render, 'Space Station', "./Assets/Space Station/Metal.jpg", (-7500, 500, 100), 0.3)
         self.Hero = player.Spaceship(self, self.loader, self.taskMgr, self.accept, "./Assets/Spaceships/spaceship.obj", self.render, 'Hero', "./Assets/Spaceships/spaceship.jpg", (1000, 1200, -50), 0.5)
+        self.rootAssetFolder = "Assets"
+        self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone", 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet5, 900, "MLB", self.Hero)
+        self.Sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone", 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Hero)
 
     def SetCollisions(self):
         '''Handles traversing and pushing collisions'''
@@ -50,7 +54,6 @@ class MyApp(ShowBase):
         '''Add player colliders and collisions.'''
         self.pusher.addCollider(self.Hero.collisionNode, self.Hero.modelNode)
         self.cTrav.addCollider(self.Hero.collisionNode, self.pusher)
-        self.cTrav.showCollisions(self.render) # Remove after collider labs
 
     def _generate_planets(self):
         '''Spawns planets at random positions with a minimum distance between each.'''

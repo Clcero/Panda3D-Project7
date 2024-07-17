@@ -20,7 +20,6 @@ class CollidableObject(PlacedObject):
 
         # Each collider gets _cNode to signify it's collidable object.
         self.collisionNode = self.modelNode.attachNewNode(CollisionNode(nodeName + '_cNode'))
-        # self.collisionNode.show()
 
 class InverseSphereCollideObject(CollidableObject): # World boundary
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, colPositionVec: Vec3, colRadius: float):
@@ -32,10 +31,8 @@ class CapsuleCollidableObject(CollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, ax: float, ay: float, az: float, bx: float, by: float, bz: float, r: float):
         super(CapsuleCollidableObject, self).__init__(loader, modelPath, parentNode, nodeName)
         self.collisionNode.node().addSolid(CollisionCapsule(ax, ay, az, bx, by, bz, r))
-        self.collisionNode.show() # Remove after lab 7
 
 class SphereCollideObject(CollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, colPositionVec: Vec3, colRadius: float):
         super(SphereCollideObject, self).__init__(loader, modelPath, parentNode, nodeName)
         self.collisionNode.node().addSolid(CollisionSphere(0, 0, 0, colRadius))
-        self.collisionNode.show()
