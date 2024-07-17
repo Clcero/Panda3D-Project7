@@ -89,28 +89,37 @@ class MyApp(ShowBase):
 
     def _generate_drones(self):
         '''Spawn Drones on planets 1, 2, and 3.'''
+        solar_system = [self.Planet1, self.Planet2, self.Planet3, self.Planet4, self.Planet5, self.Planet6]
+        self._randomize_planets(solar_system)
+
         fullCycle = 60
         for j in range(fullCycle):
             spaceJamClasses.Drone.droneCount += 1
             nickName = "Drone" + str(spaceJamClasses.Drone.droneCount)
 
             # Changed name of each drone so find() method could differentiate.
-            self.DrawCloudDefense(self.Planet1, nickName + '-Cloud')
-            self.DrawBaseballSeams(self.Planet2, nickName + '-Baseball', j, fullCycle, 2)
-            self.DrawCircleX(self.Planet3, nickName + '-X', j)
-            self.DrawCircleY(self.Planet3, nickName + '-Y', j)
-            self.DrawCircleZ(self.Planet3, nickName + '-Z', j)
+            self.DrawCloudDefense(self.CloudPlanet, nickName + '-Cloud')
+            self.DrawBaseballSeams(self.MLBPlanet, nickName + '-Baseball', j, fullCycle, 2)
+            self.DrawCircleX(self.XYZPlanet, nickName + '-X', j)
+            self.DrawCircleY(self.XYZPlanet, nickName + '-Y', j)
+            self.DrawCircleZ(self.XYZPlanet, nickName + '-Z', j)
     
     def _generate_orbiters(self):
         self.rootAssetFolder = "Assets"
         self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone-MLBOrb1", 
-                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet5, 900, "MLB", self.Hero)
+                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(800, 900), "MLB", self.Hero)
         self.Sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone-CloudOrb1", 
-                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet4, 500, "Cloud", self.Hero)
+                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(400, 500), "Cloud", self.Hero)
         self.Sentinal3 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone-MLBOrb2", 
-                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet4, 900, "MLB", self.Hero)
+                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(700, 800), "MLB", self.Hero)
         self.Sentinal4 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, self.rootAssetFolder + "/DroneDefender/DroneDefender.obj", self.render, "Drone-CloudOrb2", 
-                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.Planet4, 500, "Cloud", self.Hero)
+                                                 6.0, self.rootAssetFolder + "/DroneDefender/octotoad1_auv.png", self.OrbPlanet, random.randint(500, 600), "Cloud", self.Hero)
+    
+    def _randomize_planets(self, planets):
+        self.CloudPlanet = planets.pop(random.randrange(len(planets)))
+        self.MLBPlanet = planets.pop(random.randrange(len(planets)))
+        self.XYZPlanet = planets.pop(random.randrange(len(planets)))
+        self.OrbPlanet = planets.pop(random.randrange(len(planets)))
 
     def DrawBaseballSeams(self, centralObject, droneName, step, numSeams, radius = 1):
         unitVec = defensePaths.BaseballSeams(step, numSeams, B = 0.4)
